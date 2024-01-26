@@ -32,7 +32,7 @@ import { HashIcon, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export interface ActivityCardProps {
-  id: number;
+  pk: number;
   title: string;
   description: string;
   isPublic: boolean;
@@ -45,7 +45,7 @@ export interface ActivityCardProps {
 }
 
 export const ListActivityCard: React.FC<ActivityCardProps> = ({
-  id,
+  pk,
   title,
   description,
   isPublic,
@@ -65,7 +65,7 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
     <Card className="sm:p-0">
       <CardHeader className="grid grid-cols-[1fr_100px] gap-2 space-y-0 pb-0">
         <div className="space-y-1">
-          <Link to={`/activities/${id}`} className="p-0">
+          <Link to={`/activities/${pk}`} className="p-0">
             <CardTitle className="flex items-center gap-3 flex-wrap ">
               {title}
               <Badge variant="secondary" className="flex justify-center ">
@@ -75,9 +75,8 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
           </Link>
         </div>
         <div className="flex items-start p-0">
-          <Button variant="secondary" className="px-3 shadow-none ">
-            <PlusIcon className="mr-2 h-6 w-6" />
-            Join
+          <Button variant="secondary" className="px-3 shadow-none mr-1">
+            Join Now
           </Button>
 
           <DropdownMenu>
