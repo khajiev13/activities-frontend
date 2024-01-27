@@ -23,6 +23,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import SelectCategories from './NewActivityDrawer/SelectCategories';
+import { CategoryItem } from './NewActivityDrawer/SelectCategories';
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -51,13 +52,10 @@ const NewActivityDrawer: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
+      title: 'Chinese speaking activity',
       description: '',
       is_public: true,
-      categories: [
-        { pk: 'dsfds', name: 'Category 1' },
-        { pk: 'sad', name: 'Category 2' },
-      ],
+      categories: [],
       date_time: new Date(),
       city: 'New York',
       duration_in_minutes: 0,
@@ -130,9 +128,9 @@ const NewActivityDrawer: React.FC = () => {
               <CarouselItem key={2}>
                 <SelectCategories
                   categories={form.getValues('categories')}
-                  updateCategories={(newCategories) =>
-                    form.setValue('categories', newCategories)
-                  }
+                  setCategories={(newCategories: CategoryItem[]) => {
+                    form.setValue('categories', newCategories);
+                  }}
                 />
               </CarouselItem>
               <CarouselItem key={3}>

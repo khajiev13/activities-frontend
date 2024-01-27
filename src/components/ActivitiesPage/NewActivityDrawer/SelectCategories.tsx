@@ -29,21 +29,27 @@ type Category = {
   is_indoor: boolean;
   is_outdoor: boolean;
 };
-type CategoryItem = {
+export type CategoryItem = {
   pk: string;
   name: string;
 };
-// ...
 
-const SelectCategories: React.FC = () => {
+interface Props {
+  categories: CategoryItem[];
+  setCategories: (categories: CategoryItem[]) => void;
+}
+
+const SelectCategories: React.FC<Props> = ({ categories, setCategories }) => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string[]>([]);
   const [isOutdoor, setIsOutdoor] = React.useState<boolean>(false);
   const [isIndoor, setIsIndoor] = React.useState<boolean>(false);
-  const [categories, setCategories] = React.useState<CategoryItem[]>([]);
+  const [fetchedCategories, setFetchedCategories] = React.useState<
+    CategoryItem[]
+  >([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+
   React.useEffect(() => {
-    setCategories([]);
     setLoading(true);
     axiosInstance
       .get(`/api/categories/?is_indoor=${isIndoor}&is_outdoor=${isOutdoor}`)
@@ -52,8 +58,8 @@ const SelectCategories: React.FC = () => {
           pk: category.pk,
           name: category.name,
         }));
+        setFetchedCategories(newCategories);
         setLoading(false);
-        setCategories(newCategories);
       })
       .catch((error) => {
         console.error('Error fetching categories:', error);
@@ -121,18 +127,26 @@ const SelectCategories: React.FC = () => {
                       <CategoryLoadingSkeleton />
                     </>
                   )}
-                  {categories.map((category: CategoryItem) => (
+                  {fetchedCategories.map((category: CategoryItem) => (
                     <CommandItem
                       key={category.pk}
-                      value={category.pk}
+                      value={category.pk + ' ' + category.name}
                       onSelect={(currentValue) => {
                         const newValue = value.includes(currentValue)
                           ? value.filter((val) => val !== currentValue)
                           : [...value, currentValue];
 
                         console.log(newValue); // Log the new value
+                        const filteredNewValues = newValue.map((val) => {
+                          const [pk, name] = val.split(' ');
+                          return { pk, name };
+                        });
+                        console.log(filteredNewValues);
+
+                        setCategories(filteredNewValues); // Update the categories state with the new array
 
                         setValue(newValue);
+
                         setOpen(true);
                       }}
                     >
