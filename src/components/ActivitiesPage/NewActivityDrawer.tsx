@@ -69,11 +69,6 @@ const NewActivityDrawer: React.FC = () => {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
-
-  const handleCategoriesChange = (newCategories: string[]) => {
-    console.log('Drawer component', newCategories);
-  };
-
   return (
     <div>
       <Carousel className="w-full">
@@ -125,7 +120,7 @@ const NewActivityDrawer: React.FC = () => {
                 </div>
               </CarouselItem>
               <CarouselItem key={2}>
-                <SelectCategories passToDrawer={handleCategoriesChange} />
+                <SelectCategories />
               </CarouselItem>
               <CarouselItem key={3}>
                 <div className="p-1">

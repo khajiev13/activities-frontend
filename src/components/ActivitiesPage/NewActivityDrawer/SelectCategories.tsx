@@ -20,6 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { set } from 'date-fns';
 import axiosInstance from '@/axios';
 import CategoryLoadingSkeleton from './CategoryLoadingSkeleton';
 
@@ -33,14 +34,9 @@ type CategoryItem = {
   pk: string;
   name: string;
 };
+// ...
 
-type SelectCategoriesProps = {
-  passToDrawer: (newCategories: string[]) => void;
-};
-
-const SelectCategories: React.FC<SelectCategoriesProps> = ({
-  passToDrawer,
-}) => {
+const SelectCategories: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string[]>([]);
   const [isOutdoor, setIsOutdoor] = React.useState<boolean>(false);
@@ -64,10 +60,6 @@ const SelectCategories: React.FC<SelectCategoriesProps> = ({
         console.error('Error fetching categories:', error);
       });
   }, [isIndoor, isOutdoor]);
-
-  React.useEffect(() => {
-    passToDrawer(value);
-  }, [value]);
   return (
     <div className="p-1">
       <Card>
@@ -133,11 +125,14 @@ const SelectCategories: React.FC<SelectCategoriesProps> = ({
                   {categories.map((category: CategoryItem) => (
                     <CommandItem
                       key={category.pk}
-                      value={category.pk + category.name}
+                      value={category.pk}
                       onSelect={(currentValue) => {
                         const newValue = value.includes(currentValue)
                           ? value.filter((val) => val !== currentValue)
                           : [...value, currentValue];
+
+                        console.log(newValue); // Log the new value
+
                         setValue(newValue);
                         setOpen(true);
                       }}
