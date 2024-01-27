@@ -30,7 +30,12 @@ const formSchema = z.object({
   }),
   description: z.string().min(10),
   is_public: z.boolean(),
-  categories: z.array(z.string()),
+  categories: z.array(
+    z.object({
+      pk: z.string(),
+      name: z.string(),
+    })
+  ),
   date_time: z.date(),
   city: z.string(),
   duration_in_minutes: z.number(),
@@ -49,7 +54,10 @@ const NewActivityDrawer: React.FC = () => {
       title: '',
       description: '',
       is_public: true,
-      categories: ['category1', 'category2', 'category2'],
+      categories: [
+        { pk: 'dsfds', name: 'Category 1' },
+        { pk: 'sad', name: 'Category 2' },
+      ],
       date_time: new Date(),
       city: 'New York',
       duration_in_minutes: 0,
@@ -120,7 +128,12 @@ const NewActivityDrawer: React.FC = () => {
                 </div>
               </CarouselItem>
               <CarouselItem key={2}>
-                <SelectCategories />
+                <SelectCategories
+                  categories={form.getValues('categories')}
+                  updateCategories={(newCategories) =>
+                    form.setValue('categories', newCategories)
+                  }
+                />
               </CarouselItem>
               <CarouselItem key={3}>
                 <div className="p-1">
