@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import SelectCategories from './NewActivityDrawer/SelectCategories';
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -68,6 +69,11 @@ const NewActivityDrawer: React.FC = () => {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
+
+  const handleCategoriesChange = (newCategories: string[]) => {
+    console.log('Drawer component', newCategories);
+  };
+
   return (
     <div>
       <Carousel className="w-full">
@@ -119,15 +125,7 @@ const NewActivityDrawer: React.FC = () => {
                 </div>
               </CarouselItem>
               <CarouselItem key={2}>
-                <div className="p-1">
-                  <Card>
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <span className="text-4xl font-semibold">
-                        Second step
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
+                <SelectCategories passToDrawer={handleCategoriesChange} />
               </CarouselItem>
               <CarouselItem key={3}>
                 <div className="p-1">
