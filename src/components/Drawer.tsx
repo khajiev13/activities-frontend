@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/drawer';
 import { useLocation } from 'react-router-dom';
 import NewActivityDrawer from '@/components/ActivitiesPage/NewActivityDrawer';
+import { Progress } from './ui/progress';
 
 export function CreateActivity() {
   const location = useLocation();
@@ -22,8 +23,8 @@ export function CreateActivity() {
           <Plus className="h-8 w-8" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
-        <div className="mx-auto w-full max-w-md min-h-4/5">
+      <DrawerContent className="h-[90vh]">
+        <div className="mx-auto w-full max-w-xl ">
           <DrawerHeader>
             <DrawerTitle>
               {location.pathname === '/activities'
@@ -34,7 +35,9 @@ export function CreateActivity() {
                 ? 'Create an organization'
                 : null}
             </DrawerTitle>
-            <DrawerDescription>It's going to take few steps.</DrawerDescription>
+            <DrawerDescription>
+              It's going to take few steps. Swipe right for the next step!
+            </DrawerDescription>
           </DrawerHeader>
           {location.pathname === '/activities' ? (
             <NewActivityDrawer />
@@ -44,9 +47,10 @@ export function CreateActivity() {
             'Create an organization'
           ) : null}
           <DrawerFooter>
-            <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
+            <Progress
+              className="fixed bottom-5 sm:w-[300px] md:w-[535px]"
+              value={100}
+            />
           </DrawerFooter>
         </div>
       </DrawerContent>

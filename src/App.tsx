@@ -8,6 +8,8 @@ import { AuthProvider } from './context/AuthContext';
 import Activities from './pages/Activities/Activities';
 import Teams from './pages/Teams/Teams';
 import CornerButtons from './components/CornerButtons';
+import { Toaster } from './components/ui/sonner';
+import RenderMap from './components/Map/RenderMap';
 
 function App() {
   return (
@@ -20,9 +22,12 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/activities" element={<Activities />} />
             <Route path="/teams" element={<Teams />} />
+            <Route path="/map" element={<RenderMap />} />
             <Route path="/" element={<HomePage />} />
           </Routes>
           <CornerButtons />
+          {/* We need this to show the toast notifications */}
+          <Toaster />
         </Router>
       </AuthProvider>
     </ThemeProvider>

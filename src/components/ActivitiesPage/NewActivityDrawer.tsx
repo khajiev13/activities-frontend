@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import SelectCategories from './NewActivityDrawer/SelectCategories';
 import { CategoryItem } from './NewActivityDrawer/SelectCategories';
+import SelectLocation from '../Map/SelectLocation';
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -84,7 +85,7 @@ const NewActivityDrawer: React.FC = () => {
               <CarouselItem key={1}>
                 <div className="p-1">
                   <Card>
-                    <CardContent className="flex aspect-square items-start p-6 w-full flex-col">
+                    <CardContent className="flex aspect-square items-start p-6  w-full flex-col">
                       {/* In this card, we only put 3 inputs */}
                       <FormField
                         control={form.control}
@@ -127,13 +128,30 @@ const NewActivityDrawer: React.FC = () => {
               </CarouselItem>
               <CarouselItem key={2}>
                 <SelectCategories
-                  categories={form.getValues('categories')}
                   setCategories={(newCategories: CategoryItem[]) => {
                     form.setValue('categories', newCategories);
                   }}
                 />
               </CarouselItem>
               <CarouselItem key={3}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      <SelectLocation />
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem key={4}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      Card 4
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem key={5}>
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-6">
