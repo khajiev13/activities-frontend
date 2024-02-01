@@ -3,7 +3,6 @@ import { ActivityCardProps } from '@/components/ActivitiesPage/ListActivityCard'
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/axios';
 import { Skeleton } from '@/components/ui/skeleton';
-import { set } from 'date-fns';
 
 const Activities = () => {
   const activityCardProps: ActivityCardProps = {

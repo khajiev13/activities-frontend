@@ -3,17 +3,17 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+// import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   ChevronDownIcon,
-  CircleIcon,
-  PlusIcon,
+  // CircleIcon,
+  // PlusIcon,
   BookmarkFilledIcon,
 } from '@radix-ui/react-icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -27,7 +27,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Separator } from '@/components/ui/separator';
 import { HashIcon, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -48,13 +47,13 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
   pk,
   title,
   description,
-  isPublic,
-  participantsCount,
-  creatorName,
+  // isPublic,
+  // participantsCount,
+  // creatorName,
   categories,
-  dateTime,
-  city,
-  duration,
+  // dateTime,
+  // city,
+  // duration,
 }) => {
   const shortDescription =
     description.length > 100

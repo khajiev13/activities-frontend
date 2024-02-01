@@ -50,6 +50,7 @@ const SelectLocation: React.FC = () => {
         .setHTML(html)
         .addTo(map);
     });
+    console.log(coordinates);
   };
 
   return <BaseMap onMapLoad={handleMapLoad} />;

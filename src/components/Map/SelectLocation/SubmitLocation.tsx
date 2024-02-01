@@ -1,10 +1,6 @@
 'use client';
 import { BackgroundGradient } from '@/components/ui/background-gradient';
 
-interface SubmitLocationProps {
-  lng: number;
-  lat: number;
-}
 export function SubmitLocation() {
   return (
     <div>
