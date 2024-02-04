@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import '@maptiler/sdk/dist/maptiler-sdk.css';
 import { centerOnLocation } from './MapFunctions/LocationFunctions';
-import './ControlsStyling.css';
 
 interface BaseMapProps {
   onMapLoad: (map: maptilersdk.Map) => void;
@@ -37,6 +36,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ onMapLoad }) => {
           : maptilersdk.MapStyle.BASIC.LIGHT,
       zoom: zoom,
       fullscreenControl: 'top-right',
+      navigationControl: false,
     });
 
     centerOnLocation(map, 69.2163, 41.2995, zoom);

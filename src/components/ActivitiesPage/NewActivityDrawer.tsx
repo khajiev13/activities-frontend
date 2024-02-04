@@ -1,4 +1,5 @@
 'use client';
+import React, { useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -9,7 +10,7 @@ import {
 } from '@/components/ui/carousel';
 import { Button } from '@/components/ui/button';
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -25,6 +26,9 @@ import { Textarea } from '@/components/ui/textarea';
 import SelectCategories from './NewActivityDrawer/SelectCategories';
 import { CategoryItem } from './NewActivityDrawer/SelectCategories';
 import SelectLocation from '../Map/SelectLocation';
+import { LocationDetails } from '../Map/MapFunctions/AddLocation';
+import { toast } from 'sonner';
+import SelectedLocation from './NewActivityDrawer/SelectedLocation';
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -39,7 +43,11 @@ const formSchema = z.object({
     })
   ),
   date_time: z.date(),
+  country: z.string(),
+  state: z.string(),
   city: z.string(),
+  pk_for_location: z.string().nullable(),
+  name_for_location: z.string(),
   duration_in_minutes: z.number(),
   is_competition: z.boolean(),
   team_1: z.string().nullable(),
@@ -65,8 +73,21 @@ const NewActivityDrawer: React.FC = () => {
       team_2: null,
       is_league: false,
       league: null,
+      pk_for_location: null,
     },
   });
+  // Use the watch function to subscribe to the pk_for_location field
+  const pkForLocation = useWatch({
+    control: form.control,
+    name: 'pk_for_location', // Make sure this matches the name used in your form
+  });
+
+  useEffect(() => {
+    // If pkForLocation has a value, show the toast
+    if (pkForLocation) {
+      toast('Location has been selected!', {});
+    }
+  }, [pkForLocation]); // Re-run the effect when pkForLocation changes
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -137,7 +158,30 @@ const NewActivityDrawer: React.FC = () => {
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <SelectLocation />
+                      {form.getValues('pk_for_location') ? (
+                        <SelectedLocation
+                          country={form.getValues('country')}
+                          state={form.getValues('state')}
+                          city={form.getValues('city')}
+                          location={form.getValues('name_for_location')}
+                        />
+                      ) : (
+                        <SelectLocation
+                          setLocation={(LocationDetails: LocationDetails) => {
+                            form.setValue('country', LocationDetails.country);
+                            form.setValue('state', LocationDetails.state);
+                            form.setValue('city', LocationDetails.city);
+                            form.setValue(
+                              'pk_for_location',
+                              LocationDetails.location_pk
+                            );
+                            form.setValue(
+                              'name_for_location',
+                              LocationDetails.location_name
+                            );
+                          }}
+                        />
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -155,26 +199,7 @@ const NewActivityDrawer: React.FC = () => {
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <span className="text-4xl font-semibold">Third step</span>
-                      <Button type="submit">Submit</Button>
-                      <div className="inline-flex items-center">
-                        <div className="relative inline-block w-8 h-4 rounded-full cursor-pointer">
-                          <input
-                            id="switch-component"
-                            type="checkbox"
-                            className="absolute w-8 h-4 transition-colors duration-300 rounded-full appearance-none cursor-pointer peer  checked:bg-maincolor peer-checked:border-gray-900 peer-checked:before:bg-background bg-orange-300"
-                          />
-                          <label
-                            htmlFor="switch-component"
-                            className="before:content[''] absolute top-2/4 -left-1 h-5 w-5 -translate-y-2/4 cursor-pointer rounded-full border border-blue-gray-100 bg-white shadow-md transition-all duration-300 before:absolute before:top-2/4 before:left-2/4 before:block before:h-10 before:w-10 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity hover:before:opacity-10 peer-checked:translate-x-full peer-checked:border-gray-900 peer-checked:before:bg-gray-900"
-                          >
-                            <div
-                              className="inline-block p-5 rounded-full top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4"
-                              data-ripple-dark="true"
-                            ></div>
-                          </label>
-                        </div>
-                      </div>
+                      Card 5
                     </CardContent>
                   </Card>
                 </div>
