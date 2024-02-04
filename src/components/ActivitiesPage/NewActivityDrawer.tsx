@@ -22,6 +22,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import SelectCategories from './NewActivityDrawer/SelectCategories';
+import { CategoryItem } from './NewActivityDrawer/SelectCategories';
+import SelectLocation from '../Map/SelectLocation';
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -29,7 +32,12 @@ const formSchema = z.object({
   }),
   description: z.string().min(10),
   is_public: z.boolean(),
-  categories: z.array(z.string()),
+  categories: z.array(
+    z.object({
+      pk: z.string(),
+      name: z.string(),
+    })
+  ),
   date_time: z.date(),
   city: z.string(),
   duration_in_minutes: z.number(),
@@ -45,10 +53,10 @@ const NewActivityDrawer: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
+      title: 'Chinese speaking activity',
       description: '',
       is_public: true,
-      categories: ['category1', 'category2', 'category2'],
+      categories: [],
       date_time: new Date(),
       city: 'New York',
       duration_in_minutes: 0,
@@ -77,7 +85,7 @@ const NewActivityDrawer: React.FC = () => {
               <CarouselItem key={1}>
                 <div className="p-1">
                   <Card>
-                    <CardContent className="flex aspect-square items-start p-6 w-full flex-col">
+                    <CardContent className="flex aspect-square items-start p-6  w-full flex-col">
                       {/* In this card, we only put 3 inputs */}
                       <FormField
                         control={form.control}
@@ -119,17 +127,31 @@ const NewActivityDrawer: React.FC = () => {
                 </div>
               </CarouselItem>
               <CarouselItem key={2}>
+                <SelectCategories
+                  setCategories={(newCategories: CategoryItem[]) => {
+                    form.setValue('categories', newCategories);
+                  }}
+                />
+              </CarouselItem>
+              <CarouselItem key={3}>
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <span className="text-4xl font-semibold">
-                        Second step
-                      </span>
+                      <SelectLocation />
                     </CardContent>
                   </Card>
                 </div>
               </CarouselItem>
-              <CarouselItem key={3}>
+              <CarouselItem key={4}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      Card 4
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem key={5}>
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-6">
