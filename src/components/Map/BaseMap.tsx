@@ -9,8 +9,9 @@ interface BaseMapProps {
 }
 
 const BaseMap: React.FC<BaseMapProps> = ({ onMapLoad }) => {
-  const theme = localStorage.getItem('vite-ui-theme');
-
+  const theme = document.documentElement.classList.contains('dark')
+    ? 'dark'
+    : 'light';
   const mapContainer = useRef(null);
   const map = useRef<maptilersdk.Map | null>(null);
   const [zoom] = useState(14);
@@ -31,7 +32,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ onMapLoad }) => {
     map.current = new maptilersdk.Map({
       container: mapContainer.current,
       style:
-        theme === 'dark' || theme === 'system'
+        theme === 'dark'
           ? maptilersdk.MapStyle.BASIC.DARK
           : maptilersdk.MapStyle.BASIC.LIGHT,
       zoom: zoom,
@@ -46,7 +47,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ onMapLoad }) => {
   }, [zoom]);
 
   return (
-    <div className="relative w-full" style={{ height: '100%' }}>
+    <div className="relative w-full h-full" style={{ height: '100%' }}>
       <div ref={mapContainer} className="absolute w-full h-full" />
     </div>
   );

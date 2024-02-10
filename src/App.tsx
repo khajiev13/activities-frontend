@@ -10,6 +10,7 @@ import Teams from './pages/Teams/Teams';
 import CornerButtons from './components/CornerButtons';
 import { Toaster } from './components/ui/sonner';
 import RenderMap from './components/Map/RenderMap';
+import Organizations from './pages/OrganizationsPage/Organizations';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/activities" element={<Activities />} />
             <Route path="/teams" element={<Teams />} />
+            <Route path="/organizations" element={<Organizations />} />
             <Route path="/map" element={<RenderMap />} />
             <Route path="/" element={<HomePage />} />
           </Routes>

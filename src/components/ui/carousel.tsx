@@ -17,6 +17,7 @@ type CarouselProps = {
   plugins?: CarouselPlugin;
   orientation?: 'horizontal' | 'vertical';
   setApi?: (api: CarouselApi) => void;
+  setProgressBar?: (progress: number) => void;
 };
 
 type CarouselContextProps = {
@@ -52,6 +53,7 @@ const Carousel = React.forwardRef<
       plugins,
       className,
       children,
+      setProgressBar,
       ...props
     },
     ref
@@ -70,6 +72,17 @@ const Carousel = React.forwardRef<
       if (!api) {
         return;
       }
+
+      const currentSlide = api.selectedScrollSnap();
+      const totalSlides = api.scrollSnapList().length;
+
+      // Calculate progress as a percentage
+      const progress = ((currentSlide + 1) / totalSlides) * 100;
+
+      // Set the progress bar value
+      // setProgressBarValue(progress);
+      if (setProgressBar) setProgressBar(progress);
+      console.log(progress, setProgressBar);
 
       setCanScrollPrev(api.canScrollPrev());
       setCanScrollNext(api.canScrollNext());
@@ -200,7 +213,6 @@ const CarouselPrevious = React.forwardRef<
 
   return (
     <Button
-      type="button"
       ref={ref}
       variant={variant}
       size={size}
@@ -230,7 +242,6 @@ const CarouselNext = React.forwardRef<
 
   return (
     <Button
-      type="button"
       ref={ref}
       variant={variant}
       size={size}

@@ -33,15 +33,6 @@ interface Props {
 }
 
 const SelectCategories: React.FC<Props> = ({ setCategories }) => {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      console.log('Latitude is :', position.coords.latitude);
-      console.log('Longitude is :', position.coords.longitude);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string[]>([]);
   const [isOutdoor, setIsOutdoor] = React.useState<boolean>(false);

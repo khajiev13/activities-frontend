@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/card';
 // import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   ChevronDownIcon,
   // CircleIcon,
@@ -27,8 +26,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { HashIcon, MapPin } from 'lucide-react';
+import { HashIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import BadgeCityName from '../BadgeCityName';
+import { Badge } from '../ui/badge';
 
 export interface ActivityCardProps {
   pk: number;
@@ -67,9 +68,7 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
           <Link to={`/activities/${pk}`} className="p-0">
             <CardTitle className="flex items-center gap-3 flex-wrap ">
               {title}
-              <Badge variant="secondary" className="flex justify-center ">
-                <MapPin className=" h-6 w-6 gap-3" /> Tashkent
-              </Badge>
+              <BadgeCityName cityName="Tashkent" />
             </CardTitle>
           </Link>
         </div>

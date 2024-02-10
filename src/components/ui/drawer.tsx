@@ -9,6 +9,7 @@ const Drawer = ({
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
     shouldScaleBackground={shouldScaleBackground}
+    data-vaul-no-drag
     {...props}
   />
 );
@@ -25,6 +26,7 @@ const DrawerOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Overlay
+    data-vaul-no-drag
     ref={ref}
     className={cn('fixed inset-0 z-50 bg-black/80', className)}
     {...props}
@@ -36,9 +38,10 @@ const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
+  <DrawerPortal data-vaul-no-drag>
     <DrawerOverlay />
     <DrawerPrimitive.Content
+      data-vaul-no-drag
       ref={ref}
       className={cn(
         'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background',
@@ -46,7 +49,11 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      <div
+        data-vaul-no-drag
+        className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted"
+      />
+
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -58,6 +65,7 @@ const DrawerHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
+    data-vaul-no-drag
     className={cn('grid gap-1.5 p-4 text-center sm:text-left', className)}
     {...props}
   />
@@ -80,6 +88,7 @@ const DrawerTitle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Title
+    data-vaul-no-drag
     ref={ref}
     className={cn(
       'text-lg font-semibold leading-none tracking-tight',

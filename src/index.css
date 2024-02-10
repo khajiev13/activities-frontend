@@ -81,7 +81,9 @@ body.dark .maplibregl-ctrl-top-right > div {
 }
 
 body.light .maplibregl-popup-content {
-  background-color: rgba(255, 255, 255, 0.603) !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 25px !important;
 }
 
 body.dark .maplibregl-popup-content {

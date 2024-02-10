@@ -48,10 +48,17 @@ const SelectLocation: React.FC<SelectLocationProps> = ({ setLocation }) => {
       // Add a new popup at the clicked location
       const PopupContent = <SubmitLocation />;
       const html = ReactDOMServer.renderToString(PopupContent);
-      popupRef.current = new maptilersdk.Popup({ offset: [0, -25] })
+      popupRef.current = new maptilersdk.Popup({
+        offset: [0, -25],
+        className: 'bg-transparent rounded-xl mr-0 p-0',
+      })
         .setLngLat([e.lngLat.lng, e.lngLat.lat])
         .setHTML(html)
         .addTo(map);
+      // Style the popup
+      popupRef.current._content.style.backgroundColor = 'transparent';
+      popupRef.current._content.style.borderRadius = '25px';
+      popupRef.current._content.style.padding = '0';
       // Add the event listener
       const form = document.getElementById('location-form');
       const input = document.getElementById(
@@ -70,8 +77,18 @@ const SelectLocation: React.FC<SelectLocationProps> = ({ setLocation }) => {
           loader.classList.remove('hidden');
           button.disabled = true;
           //Add the location to the server and it returns country_name, state_name, city_name, location_name and location_pk
-          const { country, state, city, location_name, location_pk } =
-            await AddLocation(input.value, e.lngLat.lng, e.lngLat.lat);
+          const {
+            country,
+            state,
+            city,
+            location_name,
+            location_pk,
+            sunrise,
+            sunset,
+            country_code,
+            timezone,
+          } = await AddLocation(input.value, e.lngLat.lng, e.lngLat.lat);
+
           //Now let's set the location details and make it available to the parent component
           const location: LocationDetails = {
             country,
@@ -79,6 +96,10 @@ const SelectLocation: React.FC<SelectLocationProps> = ({ setLocation }) => {
             city,
             location_name,
             location_pk,
+            sunrise,
+            sunset,
+            country_code,
+            timezone,
           };
           setLocation(location);
         });
