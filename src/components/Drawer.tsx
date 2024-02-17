@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import {
   Drawer,
   DrawerClose,
-  // DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
@@ -16,6 +15,7 @@ import NewActivityDrawer from '@/components/ActivitiesPage/NewActivityDrawer';
 import { Progress } from './ui/progress';
 import { useState } from 'react';
 import NewOrganizationDrawer from '@/components/OrganizationsPage/NewOrganizationDrawer';
+import NewTeamDrawer from './TeamsPage/NewTeamDrawer';
 
 export function Create() {
   const location = useLocation();
@@ -23,17 +23,14 @@ export function Create() {
   const [progressBar, setProgressBar] = useState<number>(0);
 
   return (
-    <Drawer
-      shouldScaleBackground
-      dismissible={location.pathname === '/activities' ? false : true}
-    >
+    <Drawer shouldScaleBackground dismissible={false}>
       <DrawerTrigger asChild>
         <Button variant="outline">
           <Plus className="h-8 w-8" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-[95vh] ">
-        <div className="mx-auto w-full max-w-xl ">
+      <DrawerContent className="h-[95vh] overflow-y-hidden">
+        <div className="mx-auto w-full max-w-xl">
           <DrawerHeader>
             <DrawerTitle>
               {location.pathname === '/activities'
@@ -55,16 +52,21 @@ export function Create() {
             </DrawerDescription>
           </DrawerHeader>
           <div>
-            {location.pathname === '/activities' ? (
+            {['/activities', '/activities/'].includes(location.pathname) ? (
               <NewActivityDrawer setProgressBar={setProgressBar} />
-            ) : location.pathname === 'teams' ? (
-              'Create a team'
-            ) : location.pathname === 'organizations' ? (
-              <NewOrganizationDrawer />
+            ) : ['/teams', '/teams/'].includes(location.pathname) ? (
+              <NewTeamDrawer setProgressBar={setProgressBar} />
+            ) : ['/organizations', '/organizations/'].includes(
+                location.pathname
+              ) ? (
+              <>
+                <Progress value={progressBar} />
+                <NewOrganizationDrawer setProgressBar={setProgressBar} />
+              </>
             ) : null}
           </div>
 
-          {location.pathname === '/activities' ? (
+          {['/activities', '/activities/'].includes(location.pathname) ? (
             <DrawerFooter>
               <Progress
                 className=" sm:w-[300px] md:w-[535px]"
@@ -76,7 +78,15 @@ export function Create() {
                 </Button>
               </DrawerClose>
             </DrawerFooter>
-          ) : null}
+          ) : (
+            <DrawerFooter>
+              <DrawerClose className="w-full">
+                <Button variant={'outline'} className="w-full">
+                  Close
+                </Button>
+              </DrawerClose>
+            </DrawerFooter>
+          )}
         </div>
       </DrawerContent>
     </Drawer>

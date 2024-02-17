@@ -47,7 +47,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ onMapLoad }) => {
   }, [zoom]);
 
   return (
-    <div className="relative w-full h-full" style={{ height: '100%' }}>
+    <div className="relative w-full h-full min-h-80" style={{ height: '100%' }}>
       <div ref={mapContainer} className="absolute w-full h-full" />
     </div>
   );

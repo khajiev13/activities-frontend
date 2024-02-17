@@ -182,8 +182,9 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
               </CarouselItem>
               <CarouselItem key={3}>
                 <div className="p-1">
-                  <Card className="h-auto">
-                    <CardContent className="flex aspect-square items-center justify-start lg:justify-center p-6">
+                  <Card className="lg:text-4xl h-full min-h-[410px]">
+                    <CardContent className="flex flex-col aspect-square items-center justify-start lg:justify-center p-6 gap-4">
+                      <FormLabel>Where does the event take place?</FormLabel>
                       {form.getValues('pk_for_location') ? (
                         <SelectedLocation
                           country={form.getValues('country')}
@@ -284,7 +285,7 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
               </CarouselItem>
               <CarouselItem key={5}>
                 <div className="p-1">
-                  <Card>
+                  <Card className="lg:text-4xl h-full min-h-[410px]">
                     <CardContent className="flex aspect-square items-center justify-center p-6">
                       Card 5
                     </CardContent>

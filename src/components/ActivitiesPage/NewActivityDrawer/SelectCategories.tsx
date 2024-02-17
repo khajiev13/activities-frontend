@@ -59,7 +59,7 @@ const SelectCategories: React.FC<Props> = ({ setCategories }) => {
   };
   return (
     <div className="p-1">
-      <Card>
+      <Card className="lg:text-4xl h-full min-h-[410px]">
         <CardContent className="flex aspect-square  p-6 flex-col gap-5">
           <div className="flex items-center justify-around">
             <div className="flex items-center">

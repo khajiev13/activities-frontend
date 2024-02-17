@@ -28,7 +28,7 @@ export function SelectedLocation({
   // Setup the country code
 
   return (
-    <div className="scale-110 lg:scale-150 w-80">
+    <div className="w-full">
       <Select disabled defaultValue={country}>
         <Label className="px-3 py-2">Country</Label>
         <SelectTrigger>
@@ -57,7 +57,7 @@ export function SelectedLocation({
       </Select>
 
       <Select disabled defaultValue={state}>
-        <Label className="px-3 py-2">State</Label>
+        <Label className="px-3 py-2">State or City</Label>
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
@@ -73,7 +73,7 @@ export function SelectedLocation({
       </Select>
 
       <Select disabled defaultValue={city}>
-        <Label className="px-3 py-2">City</Label>
+        <Label className="px-3 py-2">City or Area</Label>
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>

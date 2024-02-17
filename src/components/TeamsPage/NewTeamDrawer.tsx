@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
+import { DrawerClose } from '../ui/drawer';
 
 type NewTeamDrawerProps = {
   setProgressBar: (progress: number) => void;
@@ -74,41 +75,31 @@ const NewTeamDrawer: React.FC<NewTeamDrawerProps> = ({ setProgressBar }) => {
 
   return (
     <div>
-      <Carousel className="w-full">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <CarouselContent className="min-h-96 h-full">
-              <CarouselItem key={1}>
-                <Card className="lg:text-4xl h-full">
-                  <CardContent className="flex aspect-square items-start p-6  w-full flex-col ">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Write your team name"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription></FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    {/* Add more FormFields for other properties */}
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-              {/* Add more CarouselItems for other properties */}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </form>
-        </Form>
-      </Carousel>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <Card className="lg:text-4xl h-full w-full min-h-[450px] overflow-y-auto max-h-[550px]">
+            <CardContent className="flex aspect-square items-start p-6  w-full flex-col ">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Write your team name" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+          <DrawerClose className="w-full px-2">
+            <Button className="w-full">Submit</Button>
+          </DrawerClose>
+        </form>
+      </Form>
     </div>
   );
 };
