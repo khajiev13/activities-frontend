@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import SelectLocation from '../Map/SelectLocation';
+import SelectLocation from '../SelectLocation';
 import { LocationDetails } from '../Map/MapFunctions/AddLocation';
 import { useEffect, useState } from 'react';
 import SelectedLocation from '../ActivitiesPage/NewActivityDrawer/SelectedLocation';
@@ -27,14 +27,14 @@ type NewOrganizationDrawerProps = {
   setProgressBar: (value: number) => void;
 };
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
-const ACCEPTED_IMAGE_MIME_TYPES = [
+export const MAX_FILE_SIZE = 1024 * 1024 * 5;
+export const ACCEPTED_IMAGE_MIME_TYPES = [
   'image/jpeg',
   'image/jpg',
   'image/png',
   'image/webp',
 ];
-const ACCEPTED_IMAGE_TYPES = ['jpeg', 'jpg', 'png', 'webp'];
+export const ACCEPTED_IMAGE_TYPES = ['jpeg', 'jpg', 'png', 'webp'];
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -70,10 +70,12 @@ const NewOrganizationDrawer: React.FC<NewOrganizationDrawerProps> = ({
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     setLoading(true);
-
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('pk_for_location', data.pk_for_location || '');
+    formData.append('country', LocationDetails?.country || '');
+    formData.append('state', LocationDetails?.state || '');
+    formData.append('city', LocationDetails?.city || '');
     if (data.image.length > 0) {
       formData.append('image', data.image[0]);
     }
@@ -93,7 +95,8 @@ const NewOrganizationDrawer: React.FC<NewOrganizationDrawerProps> = ({
       .catch((error) => {
         console.error(error);
         toast('Error', {
-          description: 'Something went wrong while creating an organization',
+          description:
+            'Something went wrong while creating an organization. You cannot have 2 organizations with the same name.',
           style: { borderColor: 'red' },
         });
       });
