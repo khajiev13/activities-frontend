@@ -3,6 +3,7 @@ import { ActivityCardProps } from '@/components/ActivitiesPage/ListActivityCard'
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/axios';
 import { Skeleton } from '@/components/ui/skeleton';
+import SearchNavbar from '@/components/SearchNavbar';
 
 const Activities = () => {
   const activityCardProps: ActivityCardProps = {
@@ -23,6 +24,7 @@ const Activities = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      return;
       try {
         setLoading(true);
         const response = await axiosInstance.get('/api/activities/');
@@ -39,14 +41,20 @@ const Activities = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-      {loading && <Skeleton />}
-      <ListActivityCard key={activityCardProps.pk} {...activityCardProps} />
-      {/* Map through the activities and display also pagination should be implemented */}
-      {activities.map((activity) => (
-        <ListActivityCard {...activity} key={activity.pk} />
-      ))}
-    </div>
+    <>
+      <SearchNavbar
+        search_for="activities"
+        setActivities={(activities: any) => console.log(activities)}
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+        {loading && <Skeleton />}
+        <ListActivityCard key={activityCardProps.pk} {...activityCardProps} />
+        {/* Map through the activities and display also pagination should be implemented */}
+        {activities.map((activity) => (
+          <ListActivityCard {...activity} key={activity.pk} />
+        ))}
+      </div>
+    </>
   );
 };
 

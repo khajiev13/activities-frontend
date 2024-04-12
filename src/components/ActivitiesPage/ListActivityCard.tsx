@@ -108,13 +108,13 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
         <CardDescription>{shortDescription}</CardDescription>
         <div className="flex space-x-4 text-sm text-muted-foreground flex-col gap-3">
           <div className="categories flex flex-row gap-1 flex-wrap">
-            {categories &&
+            {/* {categories &&
               categories.map((category) => (
-                <Badge className="flex items-center ">
+                <Badge key={category} className="flex items-center ">
                   <HashIcon className="h-5 w-5" />
                   {category}
                 </Badge>
-              ))}
+              ))} */}
           </div>
 
           <div className="flex flex-row justify-between items-center !mx-0">

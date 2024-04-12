@@ -9,9 +9,16 @@ import {
 
 type TeamCardProps = {
   setUniformColors?: (name: string, color: string) => void;
+  setTeamName?: (name: string) => void;
   name: string;
   image?: File;
+  image_url?: string;
   location_name?: string;
+  tshirt_color?: string;
+  shorts_color?: string;
+  socks_color?: string;
+  away_tshirt_color?: string;
+  color_picker_needed?: boolean;
 };
 
 const TeamCard: React.FC<TeamCardProps> = ({
@@ -19,6 +26,13 @@ const TeamCard: React.FC<TeamCardProps> = ({
   image,
   location_name,
   setUniformColors,
+  tshirt_color,
+  shorts_color,
+  socks_color,
+  away_tshirt_color,
+  color_picker_needed,
+  image_url,
+  setTeamName,
 }) => {
   let imageUrl = undefined;
   if (image instanceof File) {
@@ -26,10 +40,15 @@ const TeamCard: React.FC<TeamCardProps> = ({
   }
 
   return (
-    <div className="w-full flex justify-center">
+    <div
+      className="w-full flex justify-center z-40"
+      onClick={() => {
+        if (setTeamName) setTeamName(name);
+      }}
+    >
       <BackgroundGradient
         containerClassName="rounded-[22px] max-w-sm w-full"
-        className="rounded-[22px] max-w-sm p-0  bg-background flex items-center justify-center text-center w-full"
+        className="rounded-[22px] max-w-sm p-0  bg-primary flex items-center justify-center text-center w-full z-40"
       >
         <ResizablePanelGroup
           direction="horizontal"
@@ -37,7 +56,14 @@ const TeamCard: React.FC<TeamCardProps> = ({
         >
           <ResizablePanel defaultSize={30} minSize={30}>
             <div className="flex h-[200px] items-center justify-center p-6">
-              <TeamKit colorPickerNeeded setUniformColors={setUniformColors} />
+              <TeamKit
+                colorPickerNeeded={color_picker_needed}
+                setUniformColors={setUniformColors}
+                tshirt_color={tshirt_color}
+                shorts_color={shorts_color}
+                away_tshirt_color={away_tshirt_color}
+                socks_color={socks_color}
+              />
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle />
@@ -58,11 +84,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
                 <div className="flex h-full items-center justify-center p-6">
                   <div>
                     <img
-                      src={
-                        imageUrl
-                          ? imageUrl
-                          : 'https://cdn.freebiesupply.com/logos/large/2x/chelsea-fc-2-logo-png-transparent.png'
-                      }
+                      src={imageUrl ? imageUrl : image_url}
                       alt="Team picture"
                       height="100"
                       width="100"

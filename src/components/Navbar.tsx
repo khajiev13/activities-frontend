@@ -64,7 +64,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex h-16 items-center px-4">
+      <div className="flex h-16 items-center px-4 z-1000">
         <NavigationMenu className="max-w-full min-w-full w-full block ">
           <NavigationMenuList className="flex justify-between w-full min-w-full max-w-full ">
             <MobileNavbar />
@@ -93,8 +93,8 @@ export default function Navbar() {
               >
                 Activities
               </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <NavigationMenuContent className="z-1000">
+                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] z-1000">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a

@@ -10,10 +10,9 @@ import {
 } from '@/components/ui/select';
 import { DataTableFacetedFilter } from '@/components/SearchToolBar/data-table-faceted-filter';
 import { Card } from './ui/card';
-
 import { useEffect, useState } from 'react';
+import { TeamType } from '@/pages/Teams/Teams';
 import axiosInstance from '@/axios';
-import { Props } from '@/assets/svgs/TshirtSvg';
 
 type Country = {
   name: string;
@@ -44,11 +43,83 @@ const useFetchLocationData = () => {
 };
 type SearchNavbarProps = {
   search_for: string;
+  setTeams?: (teams: TeamType[]) => void;
+  setActivities?: (activities: any) => void;
 };
-const SearchNavbar = ({ search_for }: SearchNavbarProps) => {
+const SearchNavbar = ({
+  search_for,
+  setTeams,
+  setActivities,
+}: SearchNavbarProps) => {
   const sendRequest = () => {
-    console.log(searchBy, search_for);
-    console.log(selectedCountries, selectedStates, selectedCities);
+    const countriesArray = Array.from(selectedCountries);
+    const statesArray = Array.from(selectedStates);
+    const citiesArray = Array.from(selectedCities);
+    if (search_for === 'teams') {
+      // If Search by country
+      if (searchBy === 'country') {
+        if (countriesArray.length === 0) {
+          alert('Please select a country');
+          return;
+        }
+        axiosInstance
+          .get(`/api/${search_for}/country/${countriesArray}/`, {
+            params: {
+              search_by: searchBy,
+            },
+          })
+          .then((response) => {
+            if (setTeams) {
+              setTeams(response.data);
+            } else if (setActivities) {
+              setActivities(response.data);
+            }
+          });
+      }
+      // If Search by state
+      if (searchBy === 'state') {
+        if (statesArray.length === 0) {
+          alert('Please select a state');
+          return;
+        }
+        axiosInstance
+          .get(`/api/${search_for}/state/${statesArray}/`, {
+            params: {
+              search_by: searchBy,
+              countries: countriesArray,
+            },
+          })
+          .then((response) => {
+            if (setTeams) {
+              setTeams(response.data);
+            } else if (setActivities) {
+              setActivities(response.data);
+            }
+          });
+      }
+      // If Search by city
+      if (searchBy === 'city') {
+        if (citiesArray.length === 0) {
+          alert('Please select a city');
+          return;
+        }
+        axiosInstance
+          .get(`/api/${search_for}/city/${citiesArray}/`, {
+            params: {
+              search_by: searchBy,
+              countries: countriesArray,
+              states: statesArray,
+            },
+          })
+          .then((response) => {
+            if (setTeams) {
+              setTeams(response.data);
+            } else if (setActivities) {
+              setActivities(response.data);
+            }
+          });
+      }
+    }
   };
   const { countries } = useFetchLocationData();
   const [selectedCountries, setSelectedCountry] = useState<Set<string>>(
@@ -88,7 +159,7 @@ const SearchNavbar = ({ search_for }: SearchNavbarProps) => {
     options_number: country.states.length,
   }));
   return (
-    <Card className="flex justify-center m-4 gap-4 p-2 px-4 w-fit rounded-3xl mx-auto border-primary border-[2px]">
+    <Card className="flex justify-center m-4 gap-4 p-2 px-4 w-fit rounded-3xl mx-auto border-primary border-[2px] z-50">
       <DataTableFacetedFilter
         options={options}
         title={'Country'}
@@ -121,7 +192,7 @@ const SearchNavbar = ({ search_for }: SearchNavbarProps) => {
         <SelectTrigger className="w-[160px] h-8 focus:ring-0">
           <SelectValue placeholder="Search By" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="z-50">
           <SelectGroup>
             <SelectLabel>Search By</SelectLabel>
             <SelectItem value="country">Country</SelectItem>
