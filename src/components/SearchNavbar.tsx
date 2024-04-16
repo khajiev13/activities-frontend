@@ -55,70 +55,75 @@ const SearchNavbar = ({
     const countriesArray = Array.from(selectedCountries);
     const statesArray = Array.from(selectedStates);
     const citiesArray = Array.from(selectedCities);
-    if (search_for === 'teams') {
-      // If Search by country
-      if (searchBy === 'country') {
-        if (countriesArray.length === 0) {
-          alert('Please select a country');
-          return;
-        }
-        axiosInstance
-          .get(`/api/${search_for}/country/${countriesArray}/`, {
-            params: {
-              search_by: searchBy,
-            },
-          })
-          .then((response) => {
-            if (setTeams) {
-              setTeams(response.data);
-            } else if (setActivities) {
-              setActivities(response.data);
-            }
-          });
+    // If Search by country
+    console;
+    if (searchBy === 'country') {
+      if (countriesArray.length === 0) {
+        alert('Please select a country');
+        return;
       }
-      // If Search by state
-      if (searchBy === 'state') {
-        if (statesArray.length === 0) {
-          alert('Please select a state');
-          return;
-        }
-        axiosInstance
-          .get(`/api/${search_for}/state/${statesArray}/`, {
-            params: {
-              search_by: searchBy,
-              countries: countriesArray,
-            },
-          })
-          .then((response) => {
-            if (setTeams) {
-              setTeams(response.data);
-            } else if (setActivities) {
-              setActivities(response.data);
-            }
-          });
+      axiosInstance
+        .get(`/api/${search_for}/country/${countriesArray}/`, {
+          params: {
+            search_by: searchBy,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+
+          if (setTeams) {
+            setTeams(response.data);
+          } else if (setActivities) {
+            setActivities(response.data);
+          }
+        });
+    }
+    // If Search by state
+    if (searchBy === 'state') {
+      if (statesArray.length === 0) {
+        alert('Please select a state');
+        return;
       }
-      // If Search by city
-      if (searchBy === 'city') {
-        if (citiesArray.length === 0) {
-          alert('Please select a city');
-          return;
-        }
-        axiosInstance
-          .get(`/api/${search_for}/city/${citiesArray}/`, {
-            params: {
-              search_by: searchBy,
-              countries: countriesArray,
-              states: statesArray,
-            },
-          })
-          .then((response) => {
-            if (setTeams) {
-              setTeams(response.data);
-            } else if (setActivities) {
-              setActivities(response.data);
-            }
-          });
+      axiosInstance
+        .get(`/api/${search_for}/state/${statesArray}/`, {
+          params: {
+            search_by: searchBy,
+            countries: countriesArray,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+
+          if (setTeams) {
+            setTeams(response.data);
+          } else if (setActivities) {
+            setActivities(response.data);
+          }
+        });
+    }
+    // If Search by city
+    if (searchBy === 'city') {
+      if (citiesArray.length === 0) {
+        alert('Please select a city');
+        return;
       }
+      axiosInstance
+        .get(`/api/${search_for}/city/${citiesArray}/`, {
+          params: {
+            search_by: searchBy,
+            countries: countriesArray,
+            states: statesArray,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+
+          if (setTeams) {
+            setTeams(response.data);
+          } else if (setActivities) {
+            setActivities(response.data);
+          }
+        });
     }
   };
   const { countries } = useFetchLocationData();
@@ -149,10 +154,9 @@ const SearchNavbar = ({
       label: city.name,
       value: city.name,
     }));
-  console.log(searchBy + 'sdoijsoai');
 
   // Now, `relatedStates` is an array of states that belong to the selected countries.
-  console.log(countries);
+
   const options = countries.map((country) => ({
     label: country.name,
     value: country.name,

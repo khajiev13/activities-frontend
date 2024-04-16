@@ -36,7 +36,7 @@ export interface ActivityCardProps {
   title: string;
   description: string;
   isPublic: boolean;
-  participantsCount: number;
+  number_of_people_joined: number;
   creatorName: string;
   categories: string[];
   dateTime: string;

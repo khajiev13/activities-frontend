@@ -169,7 +169,6 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
       });
       return;
     }
-    setLoading(true);
     axiosInstance.post('/api/activities/', values).then((response) => {
       setTimeout(() => {
         setLoading(false);
@@ -178,6 +177,7 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
       }, 10000);
     });
     // ✅ This will be type-safe and validated.
+    setLoading(false);
     console.log(values);
   }
   return (
