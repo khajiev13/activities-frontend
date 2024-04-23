@@ -23,12 +23,13 @@ const TeamSchema = z.object({
     z.object({
       name: z.string(),
       pk: z.string(),
+      points: z.object({
+        latitude: z.number(),
+        longitude: z.number(),
+      }),
     })
   ),
-  points: z.object({
-    latitude: z.number(),
-    longitude: z.number(),
-  }),
+
   men_team: z.boolean(),
   name: z.string(),
   public_team: z.boolean(),

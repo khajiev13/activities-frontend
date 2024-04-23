@@ -96,8 +96,8 @@ const formSchema = z.object({
   is_competition: z.boolean(),
   competition: z
     .object({
-      team1: z.object({ name: z.string() }),
-      team2: z.object({ name: z.string() }),
+      team_1: z.object({ name: z.string() }),
+      team_2: z.object({ name: z.string() }),
     })
     .optional(),
 });
@@ -156,19 +156,22 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
     // Check if competition and both teams are selected and show a toast if not
     if (
       values.is_competition &&
       values.competition &&
-      (!values.competition.team1.name || !values.competition.team2.name)
+      (!values.competition.team_1.name || !values.competition.team_2.name)
     ) {
       toast({
         variant: 'destructive',
         title: 'Please choose teams',
         description: 'You must choose both teams for a competition',
       });
+
       return;
     }
+
     axiosInstance.post('/api/activities/', values).then((response) => {
       setTimeout(() => {
         setLoading(false);
@@ -177,7 +180,6 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
       }, 10000);
     });
     // ✅ This will be type-safe and validated.
-    setLoading(false);
     console.log(values);
   }
   return (
@@ -355,10 +357,10 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
                     <CardContent className="flex gap-4 flex-col aspect-square items-start justify-start p-6">
                       <IsCompetition
                         setTeam1Prop={(team_name: string) => {
-                          form.setValue('competition.team1.name', team_name);
+                          form.setValue('competition.team_1.name', team_name);
                         }}
                         setTeam2Prop={(team_name: string) => {
-                          form.setValue('competition.team2.name', team_name);
+                          form.setValue('competition.team_2.name', team_name);
                         }}
                         setIsCompetition={(isCompetition: boolean) => {
                           form.setValue('is_competition', isCompetition);
@@ -384,7 +386,7 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
               onClick={() => {
                 console.log(form.formState.errors);
               }}
-              // disabled={!form.formState.isValid}
+              disabled={!form.formState.isValid}
             >
               Create
             </Button>

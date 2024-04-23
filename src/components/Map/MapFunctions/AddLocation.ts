@@ -23,7 +23,6 @@ async function fetchLocationDetails(
   try {
     const response = await axios.get(url); // Use axios.get instead of fetch
     const data = response.data; // Axios stores the response data in a .data property
-    console.log(data);
     // Extract the country, state, and city from the data
     const country = data.geonames[0]?.countryName;
     const state = data.geonames[0]?.adminName1;
@@ -61,7 +60,6 @@ export async function AddLocation(name: string, lng: number, lat: number) {
         state: state,
         city: city,
       });
-      console.log(response.data);
       const additionalData = { sunrise, sunset, timezone, country_code };
 
       return { ...response.data, ...additionalData };

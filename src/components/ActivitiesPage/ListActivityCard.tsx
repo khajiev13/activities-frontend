@@ -16,7 +16,7 @@ import {
   BookmarkFilledIcon,
 } from '@radix-ui/react-icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
+import { CalendarDays, AlarmClock, HashIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -26,52 +26,83 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { HashIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BadgeCityName from '../BadgeCityName';
 import { Badge } from '../ui/badge';
+import { ActivityCardPropsType } from './ActivitiesListSchema';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+import { CompetitionDisplay } from '../CompetitionDisplay';
 
-export interface ActivityCardProps {
-  pk: number;
-  title: string;
-  description: string;
-  isPublic: boolean;
-  number_of_people_joined: number;
-  creatorName: string;
-  categories: string[];
-  dateTime: string;
-  city: string;
-  duration: string;
-}
+type ExtendedActivityCardPropsType = ActivityCardPropsType & {
+  className?: string;
+};
 
-export const ListActivityCard: React.FC<ActivityCardProps> = ({
-  pk,
-  title,
-  description,
-  // isPublic,
-  // participantsCount,
-  // creatorName,
-  categories,
-  // dateTime,
-  // city,
-  // duration,
-}) => {
+export const ListActivityCard: React.FC<ExtendedActivityCardPropsType> = (
+  props
+) => {
   const shortDescription =
-    description.length > 100
-      ? `${description.substring(0, 97)}...`
-      : description;
+    props.description.length > 100
+      ? `${props.description.substring(0, 97)}...`
+      : props.description;
 
   return (
-    <Card className="sm:p-0">
+    <Card className={`sm:p-0 ${props.className}`} key={props.pk}>
       <CardHeader className="grid grid-cols-[1fr_100px] gap-2 space-y-0 pb-0">
-        <div className="space-y-1">
-          <Link to={`/activities/${pk}`} className="p-0">
-            <CardTitle className="flex items-center gap-3 flex-wrap ">
-              {title}
-              <BadgeCityName cityName="Tashkent" />
-            </CardTitle>
-          </Link>
-        </div>
+        <HoverCard>
+          <HoverCardTrigger>
+            <div className="space-y-1">
+              <Link to={`/activities/${props.pk}`} className="p-0">
+                <CardTitle className="flex items-center gap-3 flex-wrap ">
+                  {props.title}{' '}
+                  <span className="flex text-sm items-center">
+                    <AlarmClock /> {props.duration_in_minutes}
+                  </span>{' '}
+                  <br />
+                  <BadgeCityName
+                    cityName={props.state.name + ' ' + props.city.name}
+                  />
+                </CardTitle>
+              </Link>
+            </div>
+          </HoverCardTrigger>
+          {props.competition.team_1.name && props.competition.team_2.name ? (
+            <HoverCardContent className="w-full  z-1000 bg-transparent border-none">
+              <CompetitionDisplay
+                team1={{
+                  name: props.competition.team_1.name ?? '',
+                  image_url: props.competition.team_1.image_url ?? '',
+                }}
+                team2={{
+                  name: props.competition.team_2.name ?? '',
+                  image_url: props.competition.team_2.image_url ?? '',
+                }}
+              />
+            </HoverCardContent>
+          ) : (
+            <HoverCardContent className="w-80  z-1000">
+              <div className="flex justify-between space-x-4">
+                <Avatar>
+                  <AvatarImage src={props.creator.image_url} />
+                  <AvatarFallback>VC</AvatarFallback>
+                </Avatar>
+                <div className="space-y-1">
+                  <h4 className="text-sm font-semibold">
+                    @{props.creator.username}
+                  </h4>
+                  <p className="text-sm">
+                    The creator of this activity is{' '}
+                    {props.creator.first_name + ' ' + props.creator.last_name}
+                  </p>
+                </div>
+              </div>
+            </HoverCardContent>
+          )}
+        </HoverCard>
+
         <div className="flex items-start p-0">
           <Button variant="secondary" className="px-3 shadow-none mr-1">
             Join Now
@@ -105,16 +136,19 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
         </div>
       </CardHeader>
       <CardContent>
-        <CardDescription>{shortDescription}</CardDescription>
+        <CardDescription className="m-2 my-3">
+          {props.public ? 'Public activitiy: ' : 'Private activity'}
+          {shortDescription}
+        </CardDescription>
         <div className="flex space-x-4 text-sm text-muted-foreground flex-col gap-3">
-          <div className="categories flex flex-row gap-1 flex-wrap">
-            {/* {categories &&
-              categories.map((category) => (
-                <Badge key={category} className="flex items-center ">
+          <div className="categories flex flex-row gap-1 flex-wrap mx-2">
+            {props.categories &&
+              props.categories.map((category) => (
+                <Badge key={category.pk} className="flex items-center ">
                   <HashIcon className="h-5 w-5" />
-                  {category}
+                  {category.name}
                 </Badge>
-              ))} */}
+              ))}
           </div>
 
           <div className="flex flex-row justify-between items-center !mx-0">
@@ -139,12 +173,20 @@ export const ListActivityCard: React.FC<ActivityCardProps> = ({
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Button className="rounded-full w-8 h-8 flex items-center justify-center  font-bold z-50">
-                +10 {/*  Participants count */}
+              <Button className="rounded-full w-8 h-8 flex items-center justify-center  font-bold z-40">
+                +{props.number_of_people_joined}
               </Button>
             </div>
 
-            <div>Updated April 2023</div>
+            <div className="flex gap-4 items-center">
+              <CalendarDays />
+              {new Date(props.date_time).toLocaleDateString() +
+                ' ' +
+                new Date(props.date_time).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+            </div>
           </div>
         </div>
       </CardContent>

@@ -1,4 +1,4 @@
-import TeamSchema from '@/pages/Teams/TeamsListingSchema';
+import TeamSchema from '@/components/TeamsPage/TeamsListingSchema';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { z } from 'zod';

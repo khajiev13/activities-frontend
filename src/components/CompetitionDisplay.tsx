@@ -9,8 +9,8 @@ type Props = {
   league_name?: string;
   team1?: { name: string; image_url: string; score?: number };
   team2?: { name: string; image_url: string; score?: number };
-  setTeam1Prop: (team: Team) => void;
-  setTeam2Prop: (team: Team) => void;
+  setTeam1Prop?: (team: Team) => void;
+  setTeam2Prop?: (team: Team) => void;
 };
 
 export function CompetitionDisplay({
@@ -51,7 +51,7 @@ export function CompetitionDisplay({
                   </h3>
                 </div>
               ) : (
-                <SelectTeam setTeamProp={setTeam1Prop} />
+                <SelectTeam setTeamProp={setTeam1Prop ?? (() => {})} />
               )}
             </Card>
           </CardItem>
@@ -79,7 +79,7 @@ export function CompetitionDisplay({
                   </h3>
                 </div>
               ) : (
-                <SelectTeam setTeamProp={setTeam2Prop} />
+                <SelectTeam setTeamProp={setTeam2Prop ?? (() => {})} />
               )}
             </Card>
           </CardItem>
