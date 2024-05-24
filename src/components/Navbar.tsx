@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import { AuthContext } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import {
@@ -158,22 +157,20 @@ export default function Navbar() {
               ) : (
                 <>
                   <NavigationMenuItem>
-                    <Link href="/register" legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={`${navigationMenuTriggerStyle()} hidden lg:flex`}
-                      >
-                        Signup
-                      </NavigationMenuLink>
-                    </Link>
+                    <NavigationMenuLink
+                      className={`${navigationMenuTriggerStyle()} hidden lg:flex`}
+                      onClick={() => navigate('/signup')}
+                    >
+                      Signup
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link href="/login" legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={`${navigationMenuTriggerStyle()} hidden lg:flex`}
-                      >
-                        Login
-                      </NavigationMenuLink>
-                    </Link>
+                    <NavigationMenuLink
+                      onClick={() => navigate('/login')}
+                      className={`${navigationMenuTriggerStyle()} hidden lg:flex`}
+                    >
+                      Login
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
                 </>
               )}
