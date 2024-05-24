@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { userData } from "@/app/data";
-import React, { useEffect, useState } from "react";
+import { userData } from '@/components/Chat/src/app/data';
+import React, { useEffect, useState } from 'react';
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { cn } from "@/lib/utils";
-import { Sidebar } from "../sidebar";
-import { Chat } from "./chat";
+} from '@/components/ui/resizable';
+import { cn } from '@/lib/utils';
+import { Sidebar } from '../sidebar';
+import { Chat } from './chat';
 
 interface ChatLayoutProps {
   defaultLayout: number[] | undefined;
@@ -23,7 +23,7 @@ export function ChatLayout({
   navCollapsedSize,
 }: ChatLayoutProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
-  const [selectedUser, setSelectedUser] = React.useState(userData[0]);
+  const [selectedUser, _] = React.useState(userData[0]);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -35,11 +35,11 @@ export function ChatLayout({
     checkScreenWidth();
 
     // Event listener for screen width changes
-    window.addEventListener("resize", checkScreenWidth);
+    window.addEventListener('resize', checkScreenWidth);
 
     // Cleanup the event listener on component unmount
     return () => {
-      window.removeEventListener("resize", checkScreenWidth);
+      window.removeEventListener('resize', checkScreenWidth);
     };
   }, []);
 
@@ -72,7 +72,8 @@ export function ChatLayout({
           )}`;
         }}
         className={cn(
-          isCollapsed && "min-w-[50px] md:min-w-[70px] transition-all duration-300 ease-in-out"
+          isCollapsed &&
+            'min-w-[50px] md:min-w-[70px] transition-all duration-300 ease-in-out'
         )}
       >
         <Sidebar
@@ -81,7 +82,7 @@ export function ChatLayout({
             name: user.name,
             messages: user.messages ?? [],
             avatar: user.avatar,
-            variant: selectedUser.name === user.name ? "grey" : "ghost",
+            variant: selectedUser.name === user.name ? 'grey' : 'ghost',
           }))}
           isMobile={isMobile}
         />
