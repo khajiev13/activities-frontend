@@ -159,7 +159,7 @@ export default function Navbar() {
                   <NavigationMenuItem>
                     <NavigationMenuLink
                       className={`${navigationMenuTriggerStyle()} hidden lg:flex`}
-                      onClick={() => navigate('/signup')}
+                      onClick={() => navigate('/register')}
                     >
                       Signup
                     </NavigationMenuLink>
