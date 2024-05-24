@@ -24,6 +24,9 @@ jobs:
 
       - name: Build project
         run: npm run build
+        #  For routing in SPA
+      - name: Prepare for GitHub Pages SPA
+        run: cp dist/index.html dist/404.html
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
