@@ -24,19 +24,19 @@ import MobileNavbar from './MobileNavbar';
 const components: { title: string; href: string; description: string }[] = [
   {
     title: 'EventoMap',
-    href: '/map',
+    href: '/activities-frontned/map',
     description:
       'Discover more on EventoMap. Find events near you or anywhere in the world.',
   },
   {
     title: 'Teams',
-    href: '/teams',
+    href: '/activities-frontned/teams',
     description:
       'Find teams to join or create your own team and invite others to join.',
   },
   {
     title: 'Organizations',
-    href: '/organizations',
+    href: '/activities-frontned/organizations',
     description:
       'Find organizations to join or create your own organization and invite others to join.',
   },
@@ -83,6 +83,7 @@ export default function Navbar() {
                       <a
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md z-1000"
                         href="/"
+                        onClick={() => navigate('/')}
                       >
                         <img src={BoyWithSkateboard} alt="BoyWithSkateboard" />
                         <div className="mb-2 mt-4 text-lg font-medium z-1000">
@@ -95,20 +96,20 @@ export default function Navbar() {
                     </NavigationMenuLink>
                   </li>
                   <ListItem
-                    href="/activities/outdoors"
                     title="Outdoor Activities"
+                    onClick={() => navigate('/activities/outdoors')}
                   >
                     Outdoor activities can be football, basketball, tennis, etc.
                   </ListItem>
                   <ListItem
-                    href="/activities/indoors"
                     title="Indoor Activities"
+                    onClick={() => navigate('/activities/indoors')}
                   >
                     Indoor activities can be chess, board games, billiards, etc.
                   </ListItem>
                   <ListItem
-                    href="/activities/language-activities"
                     title="Language Activities"
+                    onClick={() => navigate('/activities/language-activities')}
                   >
                     Learning any language can be easy with us!
                   </ListItem>
@@ -123,7 +124,7 @@ export default function Navbar() {
                     <ListItem
                       key={component.title}
                       title={component.title}
-                      href={component.href}
+                      onClick={() => navigate(component.href)}
                     >
                       {component.description}
                     </ListItem>
@@ -132,18 +133,12 @@ export default function Navbar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link
-                href="/"
-                legacyBehavior
-                passHref
-                className="sm:hidden lg:flex"
+              <NavigationMenuLink
+                className={`${navigationMenuTriggerStyle()}  hidden lg:flex`}
+                onClick={() => navigate('/')}
               >
-                <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()}  hidden lg:flex`}
-                >
-                  Home
-                </NavigationMenuLink>
-              </Link>
+                Home
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem className=" hidden lg:flex">
               <SearchCommand />
