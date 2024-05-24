@@ -37,6 +37,7 @@ const RenderMap: React.FC = () => {
     // Call displayActivities and store the cleanup function
     console.log(searchFor, activities, teams);
     if (searchFor === 'activities' && activities) {
+      setSelectedTeam(undefined);
       const activities_cleanup = displayActivities(
         activities,
         map,
@@ -49,6 +50,7 @@ const RenderMap: React.FC = () => {
     }
     // Call displayTeams and store the cleanup function
     else if (searchFor === 'teams' && teams) {
+      setSelectedActivity(undefined);
       const teams_cleanup = displayTeams(teams, map, setSelectedTeam, setOpen);
       return () => {
         teams_cleanup();

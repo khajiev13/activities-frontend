@@ -32,44 +32,6 @@ function TeamListingCard({ teams }: TeamListingCardProps) {
           color_picker_needed={false}
         />
       ))}
-      {teams.map((team: TeamType) => (
-        <TeamCard
-          setUniformColors={(name: string, color: string) => {
-            console.log(`Received name: ${name}, color: ${color}`);
-          }}
-          name={team.name}
-          image_url={team.image_url}
-          location_name={team.city_name}
-          tshirt_color={team.tshirt_color[0].name}
-          shorts_color={team.shorts_color[0].name}
-          socks_color={team.socks_color[0].name}
-          away_tshirt_color={team.away_tshirt_color[0].name}
-          color_picker_needed={false}
-        />
-      ))}
-      {teams.map((team: TeamType) => (
-        <TeamCard
-          setUniformColors={(name: string, color: string) => {
-            console.log(`Received name: ${name}, color: ${color}`);
-          }}
-          name={team.name}
-          image_url={team.image_url}
-          location_name={team.city_name}
-          tshirt_color={team.tshirt_color[0].name}
-          shorts_color={team.shorts_color[0].name}
-          socks_color={team.socks_color[0].name}
-          away_tshirt_color={team.away_tshirt_color[0].name}
-          color_picker_needed={false}
-        />
-      ))}
-      {/* <TeamCard
-        setUniformColors={(name: string, color: string) => {
-          console.log(`Received name: ${name}, color: ${color}`);
-        }}
-        name="Random Team Name"
-        image="https://example.com/random-image.jpg"
-        location_name="Random State "
-      /> */}
     </>
   );
 }

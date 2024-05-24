@@ -25,6 +25,7 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Globe2Icon } from 'lucide-react';
+import { OrganizationListingType } from './OrganizationsPage/OrganizationsListingSchema';
 
 type Country = {
   name: string;
@@ -59,13 +60,14 @@ type SearchNavbarProps = {
   setTeams?: (teams: TeamType[]) => void;
   setActivities?: (activities: any) => void;
   setLoading?: (loading: boolean) => void;
-  setOrganizations?: (organizations: OrganizationListingSchema) => void;
+  setOrganizations?: (organizations: OrganizationListingType[]) => void;
 };
 const SearchNavbar = ({
   search_for,
   setTeams,
   setActivities,
   setLoading,
+  setOrganizations,
 }: SearchNavbarProps) => {
   const sendRequest = () => {
     setLoading?.(true);
@@ -95,6 +97,8 @@ const SearchNavbar = ({
             setTeams(response.data);
           } else if (setActivities) {
             setActivities(response.data);
+          } else if (setOrganizations) {
+            setOrganizations(response.data);
           }
         })
         .finally(() => {
@@ -122,6 +126,8 @@ const SearchNavbar = ({
             setTeams(response.data);
           } else if (setActivities) {
             setActivities(response.data);
+          } else if (setOrganizations) {
+            setOrganizations(response.data);
           }
         })
         .finally(() => {
@@ -150,6 +156,8 @@ const SearchNavbar = ({
             setTeams(response.data);
           } else if (setActivities) {
             setActivities(response.data);
+          } else if (setOrganizations) {
+            setOrganizations(response.data);
           }
         })
         .finally(() => {

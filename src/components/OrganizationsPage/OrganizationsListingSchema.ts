@@ -12,25 +12,20 @@ export const OrganizationListingSchema = z.object({
       longitude: z.number(),
     }),
   }),
-  number_of_people_joined: z.number(),
-  people_joined: z.array(
-    z.object({
-      first_name: z.string().nullable(),
-      image_url: z.string().nullable(),
-      last_name: z.string().nullable(),
-    })
-  ),
+  country: z.object({
+    name: z.string(),
+  }),
   state: z.object({
     name: z.string(),
-    pk: z.string(),
   }),
   city: z.object({
     name: z.string(),
-    pk: z.string(),
   }),
   image_url: z.string().nullable(),
   teams_count: z.number(),
-  hosting_leagues_count: z.number(),
+  number_of_people_joined: z.number(),
+  number_of_teams_sponsored: z.number(),
+  hosting_leagues_count: z.number().nullable(),
   hosting_activities_count: z.number(),
 });
 

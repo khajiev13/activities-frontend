@@ -36,6 +36,11 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { CompetitionDisplay } from '../CompetitionDisplay';
+import { ConfirmationAlertModal } from '../ConfirmationAlertModel';
+import axiosInstance from '@/axios';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 type ExtendedActivityCardPropsType = ActivityCardPropsType & {
   className?: string;
@@ -44,10 +49,35 @@ type ExtendedActivityCardPropsType = ActivityCardPropsType & {
 export const ListActivityCard: React.FC<ExtendedActivityCardPropsType> = (
   props
 ) => {
+  const { username } = useContext(AuthContext);
+  const [justJoined, setJustJoined] = React.useState(
+    props.people_joined.some((person) => person.username === username)
+  );
   const shortDescription =
     props.description.length > 100
       ? `${props.description.substring(0, 97)}...`
       : props.description;
+
+  const joinActivity = () => {
+    console.log(
+      props.pk,
+      props.country.name,
+      props.city.name,
+      props.state.name
+    );
+    axiosInstance.post(`/api/activities/${props.pk}/join/`, {}).then((res) => {
+      console.log(res.data);
+      toast.success('Activity joined successfully');
+      setJustJoined(true);
+    });
+  };
+  const leaveActivity = () => {
+    axiosInstance.post(`/api/activities/${props.pk}/leave/`, {}).then((res) => {
+      console.log(res.data);
+      toast.success('Activity left successfully');
+      setJustJoined(false);
+    });
+  };
 
   return (
     <Card className={`sm:p-0 ${props.className}`} key={props.pk}>
@@ -104,9 +134,37 @@ export const ListActivityCard: React.FC<ExtendedActivityCardPropsType> = (
         </HoverCard>
 
         <div className="flex items-start p-0">
-          <Button variant="secondary" className="px-3 shadow-none mr-1">
-            Join Now
-          </Button>
+          <div>
+            {/* Other components */}
+            {justJoined ? (
+              <ConfirmationAlertModal
+                title="Are you sure you want to quit?"
+                description="This action cannot be undone."
+                onConfirm={leaveActivity}
+                buttonComponent={
+                  <Button
+                    variant="destructive"
+                    className="px-3 shadow-none mr-1"
+                  >
+                    Leave
+                  </Button>
+                }
+              ></ConfirmationAlertModal>
+            ) : (
+              <ConfirmationAlertModal
+                title="Are you sure you want to join?"
+                description="This action cannot be undone."
+                onConfirm={joinActivity}
+                buttonComponent={
+                  <Button variant="secondary" className="px-3 shadow-none mr-1">
+                    Join Now
+                  </Button>
+                }
+              ></ConfirmationAlertModal>
+            )}
+
+            {/* Other components */}
+          </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

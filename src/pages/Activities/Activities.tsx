@@ -13,9 +13,10 @@ const Activities = () => {
     <>
       <SearchNavbar
         search_for="activities"
-        setActivities={(activities: ActivityCardPropsType[]) =>
-          setActivities(activities)
-        }
+        setActivities={(activities: ActivityCardPropsType[]) => {
+          setActivities([]);
+          setActivities(activities);
+        }}
         setLoading={(loading: boolean) => setLoading(loading)}
       />
       <ScrollArea className="h-[680px] rounded-md border-none">
@@ -33,12 +34,6 @@ const Activities = () => {
             </>
           )}
           {/* Map through the activities and display also pagination should be implemented */}
-          {activities.map((activity) => (
-            <ListActivityCard {...activity} key={activity.pk} />
-          ))}
-          {activities.map((activity) => (
-            <ListActivityCard {...activity} key={activity.pk} />
-          ))}
           {activities.map((activity) => (
             <ListActivityCard {...activity} key={activity.pk} />
           ))}

@@ -6,6 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable';
+import { useNavigate } from 'react-router-dom';
 
 type TeamCardProps = {
   setUniformColors?: (name: string, color: string) => void;
@@ -38,6 +39,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
   if (image instanceof File) {
     imageUrl = URL.createObjectURL(image);
   }
+  const navigate = useNavigate();
 
   return (
     <div
@@ -80,7 +82,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
                 </div>
               </ResizablePanel>
               <ResizableHandle withHandle />
-              <ResizablePanel defaultSize={75}>
+              <ResizablePanel defaultSize={75} onClick={() => navigate(name)}>
                 <div className="flex h-full items-center justify-center p-6">
                   <div>
                     <img

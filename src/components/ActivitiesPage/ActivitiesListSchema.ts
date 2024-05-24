@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const ActivityCardProps = z.object({
+export const ActivityCardProps = z.object({
   categories: z.array(
     z.object({
       name: z.string(),
@@ -46,6 +46,7 @@ const ActivityCardProps = z.object({
       first_name: z.string().nullable(),
       image_url: z.string().nullable(),
       last_name: z.string().nullable(),
+      username: z.string().nullable(),
     })
   ),
   pk: z.string(),
