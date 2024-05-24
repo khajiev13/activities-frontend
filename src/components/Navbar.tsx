@@ -23,19 +23,19 @@ import MobileNavbar from './MobileNavbar';
 const components: { title: string; href: string; description: string }[] = [
   {
     title: 'EventoMap',
-    href: '/activities-frontned/map',
+    href: '/map',
     description:
       'Discover more on EventoMap. Find events near you or anywhere in the world.',
   },
   {
     title: 'Teams',
-    href: '/activities-frontned/teams',
+    href: '/teams',
     description:
       'Find teams to join or create your own team and invite others to join.',
   },
   {
     title: 'Organizations',
-    href: '/activities-frontned/organizations',
+    href: '/organizations',
     description:
       'Find organizations to join or create your own organization and invite others to join.',
   },
