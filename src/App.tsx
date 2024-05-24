@@ -23,7 +23,7 @@ function App() {
       >
         {' '}
         <AuthProvider>
-          <Router>
+          <Router basename="/activities-frontend">
             <Navbar />
             <Routes>
               <Route path="/login" element={<Login />} />
