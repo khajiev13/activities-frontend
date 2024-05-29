@@ -113,8 +113,8 @@ const NewActivityDrawer: React.FC<NewActivityDrawerProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: 'Beijing Celtics VS Too Sexy',
-      description: 'Friendly match between Beijing Celtics and Too Sexy.',
+      title: '',
+      description: '',
       public: true,
       categories: [],
       date_time: new Date(),
