@@ -8,21 +8,31 @@ const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 30000,
   headers: {
-    Authorization: localStorage.getItem('access_token')
-      ? 'Bearer ' + localStorage.getItem('access_token')
-      : null,
     'Content-Type': 'application/json',
     accept: 'application/json',
   },
 });
 
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
+// Interceptor to set the Authorization header before each request
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers['Authorization'] = 'Bearer ' + token;
+    }
+    return config;
   },
-  async function (error) {
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
     const originalRequest = error.config;
-    // Add a check to avoid infinite loop
+
+    // Prevent infinite loop
     if (originalRequest.url === 'api/users/token/refresh/') {
       // Handle refresh token failure logic here
       return Promise.reject(error);
@@ -75,7 +85,9 @@ axiosInstance.interceptors.response.use(
 
             return axiosInstance(originalRequest);
           } catch (err) {
-            console.log(err);
+            console.log('Error refreshing token:', err);
+            window.location.href = '/login/';
+            return Promise.reject(error);
           }
         } else {
           console.log('Refresh token is expired', tokenParts.exp, now);
@@ -87,7 +99,6 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // specific error handling done elsewhere
     return Promise.reject(error);
   }
 );
