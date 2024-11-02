@@ -5,6 +5,7 @@ import { AnimatedTooltip } from '@/components/ui/animated-tooltip';
 import { WobbleCard } from '@/components/ui/wobble-card';
 import { ActivityDetailsType } from '@/components/ActivitiesPage/ActivitiesListSchema';
 import { useState } from 'react';
+import ActivityDetail from '@/components/ActivitiesPage/ActivityDetail';
 
 export function WobbleCardComponent({
   activity,
@@ -136,8 +137,12 @@ export const ActivitiesDetail = () => {
 
   return (
     <>
-      <AnimatedTooltipPreview />
+    <div className='w-screen h-screen overflow-scroll'>
+    <AnimatedTooltipPreview />
       {activity && <WobbleCardComponent activity={activity} />}
+      <ActivityDetail />
+    </div>
+      
     </>
   );
 };
