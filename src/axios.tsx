@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-const baseURL =
-  'https://eventopia-backend-due3e9c5bkd3heaf.francecentral-01.azurewebsites.net/';
-// Try https://eventopia-final-8752960a4ac1.herokuapp.com/ for production
+const baseURL = process.env.backend_api_address || 'http://http://khajiev13.jprq.site/';
+// Try https://eventopia-backend-due3e9c5bkd3heaf.francecentral-01.azurewebsites.net/ for production
 // Try 'http://127.0.0.1:8000/' for development
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 30000,
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
     accept: 'application/json',
